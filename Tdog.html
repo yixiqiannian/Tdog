@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>舔狗怎么说</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- 公众号 -->
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <style>
+        * {
+            list-style: none;
+            font-size: 22px;
+            /* color: rgb(132, 252, 21); */
+            /* background-color: rgb(19, 18, 18); */
+        }
+
+        body {
+            background-color: rgb(44, 43, 43);
+        }
+
+        .stand {
+            margin: 0 auto;
+            /* padding-top: 60px; */
+            /* width: 600px; */
+            text-align: center;
+            /* background-color: rgb(151, 21, 21); */
+        }
+
+        .stand>p {
+            color: aqua;
+        }
+
+        .tt {
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        .dog {
+            display: inline-block;
+            size: 12px;
+            text-align: center;
+            color: aquamarine;
+            padding-inline-start: 0px;
+            /* padding-left: -20px; */
+        }
+
+        h4 {
+            font-size: 12px;
+            color: rgb(243, 124, 124);
+        }
+
+        .dog>li {
+            text-align: center;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="stand" v-if="!is_start">
+            <p>{{tx}}</p>
+            <!-- <p>开心的舔狗语录</p> -->
+            <el-button class="success" @click="send" round>开始做舔狗</ebutton>
+        </div>
+        <div class="tt" v-if="is_start">
+            <!-- <button class="stand">555</button> -->
+            <ul class="dog" v-for="item in movies">
+
+                <h4>微信公众号关注“听说爱情很美”</h4>
+
+
+                <li>{{ item.content }}</li>
+
+
+            </ul>
+        </div>
+    </div>
+    <!-- <script src="../js/vue.js"></script> -->
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                tx: '点击生成你的舔狗语录',
+                movies: [],
+                is_start: false,
+            },
+            methods: {
+                send() {
+                    //点击后按钮消失，出现舔狗语录
+                    this.is_start = true;
+                    var ct = this;
+                    axios({
+                        method: 'get',
+                        url: 'http://api.tianapi.com/tiangou/index?key=81b39e09c6748897fefc0691b70f76de',
+                    }).then(function (res) {
+                        console.log(res.data.newslist);
+                        ct.movies = res.data.newslist;
+
+                    });
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
